@@ -18,3 +18,10 @@ This solution is much like the application-invoke, however it is runs the thread
 
 Based on this reference:
 http://www.mono-project.com/Responsive_Applications#Gtk.ThreadNotify
+
+#idle-handler
+
+This example shows how to run a small function whenever the application is idle. However, if you do too much work on the idle thread it will block the ui (meaning the idle function must finish or give cpu time back to the main loop to update the ui).
+
+Based on this reference:
+http://www.mono-project.com/Responsive_Applications#Idle_Handlers
