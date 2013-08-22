@@ -10,3 +10,8 @@ The goal of this solution is to be create a thread from the main class before th
 
 Based on this reference - http://www.mono-project.com/Responsive_Applications#Gtk.Application.Invoke
 
+thread-notify
+
+This solution is much like the application-invoke, however it is runs the thread with a ReadyEvent triggered upon completion.
+
+http://www.mono-project.com/Responsive_Applications#Gtk.ThreadNotify
