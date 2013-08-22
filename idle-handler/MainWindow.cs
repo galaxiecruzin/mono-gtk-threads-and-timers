@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Threading;
 using GLib;
 using Gtk;
 
@@ -9,6 +8,7 @@ public partial class MainWindow: Gtk.Window
 	private static Label label;
 	private static int inc;
 	private static int idleInc;
+	private static bool run_clock;
 
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
@@ -18,6 +18,8 @@ public partial class MainWindow: Gtk.Window
 		idleInc = inc = 0;
 		// static of label1
 		label = this.label1;
+		// static default for run_clock
+		run_clock = true;
 
 		// Create idle handler
 		GLib.Idle.Add (new IdleHandler (OnIdleDoWork));
@@ -39,8 +41,20 @@ public partial class MainWindow: Gtk.Window
 
 	bool OnIdleDoWork ()
 	{
+		if (run_clock == true) {
+			run_clock = false;
+			//Wait 1 second then run update_status
+			GLib.Timeout.Add (1000, new GLib.TimeoutHandler (update_status));
+			Debug.WriteLine ("StartClock()");
+		}
+		return true; //always run again
+	}
+
+	bool update_status ()
+	{
 		// Do small bits of work
 		idleInc++;
+
 		Debug.WriteLine("OnIdleDoWork()" + idleInc.ToString());
 		// lots of processing here
 		int x = 0;
@@ -51,6 +65,7 @@ public partial class MainWindow: Gtk.Window
 			}
 		}
 		Debug.WriteLine("|");
-		return true;
+		run_clock = true;
+		return false; // let idle handler determine if this should run
 	}
 }
